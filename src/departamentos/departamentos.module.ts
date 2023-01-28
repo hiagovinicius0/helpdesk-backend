@@ -21,5 +21,6 @@ import { Departamento } from './entities/departamento.entity';
   ],
   controllers: [DepartamentosController],
   providers: [DepartamentosService, DepartamentosRepository],
+  exports: [DepartamentosRepository],
 })
 export class DepartamentosModule {}

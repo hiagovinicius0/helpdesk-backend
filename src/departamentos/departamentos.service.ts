@@ -1,9 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { TipoUsuario } from 'src/enum/TipoUsuario';
 import { StatusResponse } from 'src/generics/constants';
 import { DepartamentosRepository } from './departamentos.repository';
 import { CreateDepartamentoDto } from './dto/create-departamento.dto';
 import { UpdateDepartamentoDto } from './dto/update-departamento.dto';
-import { Departamento } from './entities/departamento.entity';
 
 @Injectable()
 export class DepartamentosService {
@@ -14,8 +14,11 @@ export class DepartamentosService {
     return this.departamentoRepository.criar(createDepartamentoDto);
   }
 
-  findAll() {
-    return this.departamentoRepository.listarTodos();
+  findAll(funcao: TipoUsuario) {
+    if (funcao === TipoUsuario.ADMIN) {
+      return this.departamentoRepository.listarTodos();
+    }
+    return this.departamentoRepository.listarAtivos();
   }
 
   async findOne(id: number) {

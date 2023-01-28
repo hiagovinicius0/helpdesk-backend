@@ -22,12 +22,16 @@ export class DepartamentosRepository {
     return this.departamentoRepo.find();
   }
 
-  listarTodosUsuario(): Promise<Departamento[]> {
+  listarAtivos(): Promise<Departamento[]> {
     return this.departamentoRepo.find({ where: { ativo: true } });
   }
 
   listarDepartamento(id: number): Promise<Departamento | null> {
     return this.departamentoRepo.findOne({ where: { id: id } });
+  }
+
+  listarDepartamentoAtivo(id: number): Promise<Departamento | null> {
+    return this.departamentoRepo.findOne({ where: { id: id, ativo: true } });
   }
 
   update(departamento: Partial<Departamento>): Promise<Partial<Departamento>> {

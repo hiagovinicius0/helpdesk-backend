@@ -10,6 +10,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { JwtStrategy } from './jwt-stategy';
 import { JwtAuthGuard } from './jwt-aut.guard';
 import { PostgresBDService } from 'src/generics/postgres.bd';
+import { DepartamentosModule } from 'src/departamentos/departamentos.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { PostgresBDService } from 'src/generics/postgres.bd';
       }),
       inject: [ConfigService],
     }),
+    DepartamentosModule,
   ],
   controllers: [AuthController],
   providers: [

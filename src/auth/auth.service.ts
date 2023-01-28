@@ -9,12 +9,14 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Usuario } from './entities/usuario.entity';
+import { DepartamentosRepository } from 'src/departamentos/departamentos.repository';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly authRepository: AuthRepository,
     private jwtService: JwtService,
+    private readonly departamentoRepository: DepartamentosRepository,
   ) {}
   async login(login: LoginDto) {
     const usuario = await this.authRepository.obterUsuario(login.email);
@@ -49,6 +51,16 @@ export class AuthService {
     if (usuario) {
       throw new BadRequestException('Usuario já existe');
     }
+
+    const departamento =
+      await this.departamentoRepository.listarDepartamentoAtivo(
+        criarUsuario.departamento,
+      );
+
+    if (departamento === null) {
+      throw new BadRequestException('Departamento não encontrado!');
+    }
+
     const senhaCriptografada = this.criptografarSenha(criarUsuario.senha);
     return this.authRepository.criarUsuario({
       nome: criarUsuario.nome,

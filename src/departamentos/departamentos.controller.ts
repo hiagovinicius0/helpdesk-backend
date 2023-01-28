@@ -11,6 +11,10 @@ import { DepartamentosService } from './departamentos.service';
 import { CreateDepartamentoDto } from './dto/create-departamento.dto';
 import { UpdateDepartamentoDto } from './dto/update-departamento.dto';
 import { ApiBearerAuth } from '@nestjs/swagger';
+import { TiposDeUsuario } from 'src/guard/tipo-usuario.guard';
+import { TipoUsuario } from 'src/guard/tipo-usuario';
+import { UsuarioDecorator } from 'src/decorator/usuario.decorator';
+import { Usuario } from 'src/auth/entities/usuario.entity';
 
 @Controller('departamentos')
 @ApiBearerAuth()
@@ -18,13 +22,15 @@ export class DepartamentosController {
   constructor(private readonly departamentosService: DepartamentosService) {}
 
   @Post()
+  @TiposDeUsuario(TipoUsuario.ADMIN)
   create(@Body() createDepartamentoDto: CreateDepartamentoDto) {
     return this.departamentosService.create(createDepartamentoDto);
   }
 
   @Get()
-  findAll() {
-    return this.departamentosService.findAll();
+  findAll(@UsuarioDecorator() usuario: Usuario) {
+    console.log(usuario);
+    return this.departamentosService.findAll(usuario.funcao);
   }
 
   @Get(':id')
@@ -33,6 +39,7 @@ export class DepartamentosController {
   }
 
   @Patch(':id')
+  @TiposDeUsuario(TipoUsuario.ADMIN)
   update(
     @Param('id') id: string,
     @Body() updateDepartamentoDto: UpdateDepartamentoDto,
@@ -41,6 +48,7 @@ export class DepartamentosController {
   }
 
   @Delete(':id')
+  @TiposDeUsuario(TipoUsuario.ADMIN)
   remove(@Param('id') id: string) {
     return this.departamentosService.remove(+id);
   }
