@@ -2,7 +2,7 @@ export class ColumnDateTransformer {
   to(data: Date | null): Date | null {
     return data;
   }
-  from(data: Date | null) {
+  from(data: Date | null): Date | null | string {
     if (data === null) {
       return data;
     }
@@ -20,4 +20,8 @@ export class ColumnNumericTransformer {
   from(data: string): number {
     return parseFloat(data);
   }
+}
+
+export function isNumber(val: string | number): boolean {
+  return val === +val;
 }

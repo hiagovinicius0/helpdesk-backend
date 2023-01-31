@@ -4,6 +4,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { isNumber, JwtPayload } from './constants';
 import { AuthService } from './auth.service';
+import { Usuario } from './entities/usuario.entity';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -18,10 +19,11 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate({ sub, username }: JwtPayload) {
+  async validate({ sub, username }: JwtPayload): Promise<Usuario> {
     if (!sub || !username) {
       throw new UnauthorizedException('Token Incorreto');
     }
+
     if (!isNumber(sub)) {
       throw new UnauthorizedException('Token Incorreto');
     }

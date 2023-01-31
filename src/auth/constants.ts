@@ -6,6 +6,6 @@ export interface JwtPayload {
   username?: string;
 }
 
-export function isNumber(val) {
+export function isNumber(val: string | number): boolean {
   return val === +val;
 }

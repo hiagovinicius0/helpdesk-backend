@@ -18,11 +18,10 @@ export class CriarChamadoDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsNumber()
-  departamento: number;
+  departamentoResponsavel: number;
 
   @ApiProperty()
   @IsNotEmpty()
-  @IsNumber()
   @IsEnum(PrioridadeChamado)
-  prioridade: number;
+  prioridade: PrioridadeChamado;
 }
