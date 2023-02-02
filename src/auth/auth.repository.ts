@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { RegisterDto } from 'src/auth/dto/register.dto';
 import { Repository } from 'typeorm';
 import { Usuario } from './entities/usuario.entity';
 
@@ -11,22 +10,8 @@ export class AuthRepository {
     private readonly usuarioRepo: Repository<Usuario>,
   ) {}
 
-  criarUsuario({
-    departamento,
-    email,
-    funcao,
-    nome,
-    senha,
-  }: RegisterDto): Promise<Usuario> {
-    return this.usuarioRepo.save({
-      ativo: true,
-      nome: nome,
-      senha: senha,
-      tipoUsuario: funcao,
-      departamento: departamento,
-      funcao: funcao,
-      email: email,
-    });
+  criarUsuario(usuario: Usuario): Promise<Usuario> {
+    return this.usuarioRepo.save(usuario);
   }
 
   obterUsuario(email: string): Promise<Usuario | null> {

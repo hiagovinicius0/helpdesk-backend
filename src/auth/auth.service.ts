@@ -70,9 +70,10 @@ export class AuthService {
     await this.authRepository.criarUsuario({
       nome: criarUsuario.nome,
       senha: senhaCriptografada,
-      departamento: criarUsuario.departamento,
+      departamento,
       email: criarUsuario.email,
       funcao: criarUsuario.funcao,
+      ativo: true,
     });
 
     return this.authRepository.obterUsuario(criarUsuario.email);

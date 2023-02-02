@@ -1,6 +1,7 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Usuario } from 'src/auth/entities/usuario.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity('departamento')
+@Entity()
 export class Departamento {
   @PrimaryGeneratedColumn()
   id: number;
@@ -10,4 +11,7 @@ export class Departamento {
 
   @Column()
   ativo: boolean;
+
+  @OneToMany(() => Usuario, (usuario) => usuario.departamento)
+  usuarios: Usuario[];
 }

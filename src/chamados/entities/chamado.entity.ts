@@ -1,11 +1,12 @@
 import { ColumnDateTransformer } from 'src/generics/functions';
+import { Mensagem } from 'src/mensagens/entities/mensagem.entity';
 import { DateTypeDB } from 'src/types/constants';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity('chamados')
+@Entity()
 export class Chamado {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column()
   titulo: string;
@@ -34,6 +35,9 @@ export class Chamado {
   @Column()
   ultimoStatus: number;
 
-  @Column()
+  @Column({ type: 'boolean' })
   ativo: boolean;
+
+  @OneToMany(() => Mensagem, (mensagem) => mensagem.chamado)
+  mensagens: Mensagem[];
 }

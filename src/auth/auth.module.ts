@@ -9,7 +9,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtStrategy } from './jwt-stategy';
 import { JwtAuthGuard } from './jwt-aut.guard';
-import { PostgresBDService } from 'src/generics/postgres.bd';
+import { PostgresBDService } from 'src/postgres.bd';
 import { DepartamentosModule } from 'src/departamentos/departamentos.module';
 
 @Module({

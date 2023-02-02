@@ -48,6 +48,7 @@ export class ChamadosService {
       titulo,
       ultimoStatus: StatusChamado.NAO_ATENDIDO,
       usuarioCriador: usuarioId,
+      ativo: true,
     });
   }
 
@@ -75,7 +76,7 @@ export class ChamadosService {
     return this.chamadoRepository.listarApenasDepartamento(departamentoId);
   }
 
-  async findOne(id: number): Promise<Chamado> {
+  async findOne(id: string): Promise<Chamado> {
     const departamento = await this.chamadoRepository.listar(id);
 
     if (departamento === null) {
@@ -86,7 +87,7 @@ export class ChamadosService {
   }
 
   async atualizarChamado(
-    chamadoId: number,
+    chamadoId: string,
     atualizarChamadoDto: AtualizarChamadoDto,
   ): Promise<Chamado> {
     const chamado = await this.chamadoRepository.listar(chamadoId);
@@ -106,7 +107,7 @@ export class ChamadosService {
     return this.chamadoRepository.listar(chamadoId);
   }
 
-  async remover(id: number): Promise<StatusResponse> {
+  async remover(id: string): Promise<StatusResponse> {
     await this.chamadoRepository.remove(id);
 
     return { status: 'OK' };

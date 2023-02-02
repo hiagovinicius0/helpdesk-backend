@@ -4,7 +4,7 @@ import { DepartamentosController } from './departamentos.controller';
 import { DepartamentosRepository } from './departamentos.repository';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { PostgresBDService } from 'src/generics/postgres.bd';
+import { PostgresBDService } from 'src/postgres.bd';
 import { Departamento } from './entities/departamento.entity';
 
 @Module({

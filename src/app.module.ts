@@ -4,6 +4,7 @@ import { ConfigModule } from '@nestjs/config';
 import { DepartamentosModule } from './departamentos/departamentos.module';
 import { GuardModule } from './guard/guard.module';
 import { ChamadosModule } from './chamados/chamados.module';
+import { MensagensModule } from './mensagens/mensagens.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { ChamadosModule } from './chamados/chamados.module';
     DepartamentosModule,
     GuardModule,
     ChamadosModule,
+    MensagensModule,
   ],
 })
 export class AppModule {}

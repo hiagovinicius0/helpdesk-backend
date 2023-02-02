@@ -35,13 +35,13 @@ export class ChamadosController {
   listarTodos(@UsuarioDecorator() usuario: Usuario): Promise<Chamado[]> {
     return this.chamadosService.listarChamados(
       usuario.funcao,
-      usuario.departamento,
+      usuario.departamento.id,
     );
   }
 
   @Get(':id')
   listar(@Param('id') id: string): Promise<Chamado> {
-    return this.chamadosService.findOne(+id);
+    return this.chamadosService.findOne(id);
   }
 
   @Patch(':id')
@@ -50,12 +50,12 @@ export class ChamadosController {
     @Param('id') id: string,
     @Body() atualizarChamadoDto: AtualizarChamadoDto,
   ): Promise<Chamado> {
-    return this.chamadosService.atualizarChamado(+id, atualizarChamadoDto);
+    return this.chamadosService.atualizarChamado(id, atualizarChamadoDto);
   }
 
   @Delete(':id')
   @TiposDeUsuario(TipoUsuario.ADMIN)
   remover(@Param('id') id: string): Promise<StatusResponse> {
-    return this.chamadosService.remover(+id);
+    return this.chamadosService.remover(id);
   }
 }

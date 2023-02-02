@@ -3,4 +3,5 @@ export enum StatusChamado {
   EM_ATENDIMENTO = 2,
   EM_ATRASO = 3,
   ATENDIDO = 4,
+  FINALIZADO = 5,
 }

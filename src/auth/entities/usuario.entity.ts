@@ -1,12 +1,20 @@
 import { Exclude } from 'class-transformer';
+import { Departamento } from 'src/departamentos/entities/departamento.entity';
 import { TipoUsuario } from 'src/enum/TipoUsuario';
 import { ColumnNumericTransformer } from 'src/generics/functions';
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Mensagem } from 'src/mensagens/entities/mensagem.entity';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  ManyToOne,
+} from 'typeorm';
 
-@Entity('usuario')
+@Entity()
 export class Usuario {
   @PrimaryGeneratedColumn()
-  id: number;
+  id?: number;
 
   @Column()
   nome: string;
@@ -18,6 +26,7 @@ export class Usuario {
   @Column()
   senha: string;
 
+  @Exclude()
   @Column({
     type: 'numeric',
     precision: 2,
@@ -26,9 +35,12 @@ export class Usuario {
   })
   funcao: TipoUsuario;
 
-  @Column()
-  departamento: number;
-
   @Column({ default: true })
   ativo: boolean;
+
+  @OneToMany(() => Mensagem, (mensagem) => mensagem.chamado)
+  mensagens?: Mensagem[];
+
+  @ManyToOne(() => Departamento, (departamento) => departamento.usuarios)
+  departamento: Departamento;
 }
