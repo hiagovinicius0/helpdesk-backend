@@ -5,15 +5,17 @@ import {
   Post,
   UseInterceptors,
 } from '@nestjs/common';
-import { LoginDto } from 'src/auth/dto/login.dto';
-import { RegisterDto } from 'src/auth/dto/register.dto';
 import { AuthService } from './auth.service';
 import { Public } from '../decorator/public';
-import { ApiResponse } from '@nestjs/swagger';
-import { LoginResponseDto } from 'src/auth/dto/login-response.dto';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Usuario } from './entities/usuario.entity';
+import { LoginDto } from './dto/request/login.dto';
+import { RegisterDto } from './dto/request/register.dto';
+import { LoginResponseDto } from './dto/response/login-response.dto';
+import { RegisterResponseDto } from './dto/response/register-response.dto';
 
 @Controller('auth')
+@ApiTags('Auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
   @Post('login')
@@ -29,6 +31,10 @@ export class AuthController {
   @UseInterceptors(ClassSerializerInterceptor)
   @Post('register')
   @Public()
+  @ApiResponse({
+    status: 201,
+    type: RegisterResponseDto,
+  })
   register(@Body() register: RegisterDto): Promise<Usuario> {
     return this.authService.criarUsuario(register);
   }

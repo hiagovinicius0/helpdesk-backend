@@ -8,8 +8,8 @@ async function bootstrap(): Promise<void> {
   app.useGlobalPipes(new ValidationPipe());
 
   const config = new DocumentBuilder()
-    .setTitle('Cats example')
-    .setDescription('The cats API description')
+    .setTitle('Help Desk')
+    .setDescription('The Help Desk API description')
     .setVersion('1.0')
     .addBearerAuth()
     .build();

@@ -15,10 +15,16 @@ export class AuthRepository {
   }
 
   obterUsuario(email: string): Promise<Usuario | null> {
-    return this.usuarioRepo.findOne({ where: { email: email } });
+    return this.usuarioRepo.findOne({
+      where: { email: email },
+      relations: ['departamento'],
+    });
   }
 
   obterUsuarioToken(id: number, email: string): Promise<Usuario | null> {
-    return this.usuarioRepo.findOne({ where: { id, email } });
+    return this.usuarioRepo.findOne({
+      where: { id, email },
+      relations: ['departamento'],
+    });
   }
 }

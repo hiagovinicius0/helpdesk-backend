@@ -1,6 +1,4 @@
-import { LoginDto } from 'src/auth/dto/login.dto';
 import * as bcrypt from 'bcrypt';
-import { RegisterDto } from 'src/auth/dto/register.dto';
 import { AuthRepository } from './auth.repository';
 import {
   BadRequestException,
@@ -10,7 +8,9 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import { Usuario } from './entities/usuario.entity';
 import { DepartamentosRepository } from 'src/departamentos/departamentos.repository';
-import { LoginResponseDto } from './dto/login-response.dto';
+import { LoginResponseDto } from './dto/response/login-response.dto';
+import { LoginDto } from './dto/request/login.dto';
+import { RegisterDto } from './dto/request/register.dto';
 
 @Injectable()
 export class AuthService {
@@ -38,6 +38,12 @@ export class AuthService {
 
     return {
       accessToken: this.jwtService.sign(payload),
+      usuario: {
+        id: usuario.id,
+        funcao: usuario.funcao,
+        nome: usuario.nome,
+        departamento: usuario.departamento,
+      },
     };
   }
 

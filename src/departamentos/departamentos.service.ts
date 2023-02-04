@@ -2,8 +2,8 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { TipoUsuario } from 'src/enum/TipoUsuario';
 import { StatusResponse } from 'src/generics/constants';
 import { DepartamentosRepository } from './departamentos.repository';
-import { CreateDepartamentoDto } from './dto/create-departamento.dto';
-import { UpdateDepartamentoDto } from './dto/update-departamento.dto';
+import { CreateDepartamentoDto } from './dto/request/create-departamento.dto';
+import { UpdateDepartamentoDto } from './dto/request/update-departamento.dto';
 import { Departamento } from './entities/departamento.entity';
 
 @Injectable()

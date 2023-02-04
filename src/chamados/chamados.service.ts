@@ -5,11 +5,9 @@ import {
 } from '@nestjs/common';
 import { ChamadosRepository } from './chamados.repository';
 import { tz } from 'moment-timezone';
-import { CriarChamadoDto } from './dto/criar-chamado.dto';
 import { PrioridadeChamado } from 'src/enum/PrioridadeChamado';
 import { StatusChamado } from 'src/enum/StatusChamado';
 import { DepartamentosRepository } from 'src/departamentos/departamentos.repository';
-import { AtualizarChamadoDto } from './dto/atualizar-chamado.dto';
 import { Chamado } from './entities/chamado.entity';
 import { StatusResponse } from 'src/generics/constants';
 import { TipoUsuario } from 'src/enum/TipoUsuario';
@@ -21,6 +19,8 @@ import { AtualizarStatusEvent } from './events/atualizar-status.event';
 import { AtualizarPrioridadeEvent } from './events/atualizar-prioridade.event';
 import { HistoricoChamadoRepository } from 'src/historico-chamado/historico-chamado.repository';
 import { HistoricoChamado } from 'src/historico-chamado/entities/historico-chamado.entity';
+import { CriarChamadoDto } from './dto/request/criar-chamado.dto';
+import { AtualizarChamadoDto } from './dto/request/atualizar-chamado.dto';
 
 @Injectable()
 export class ChamadosService {

@@ -17,7 +17,13 @@ export class HistoricoChamadoRepository {
   listar(chamadoId: string): Promise<HistoricoChamado[]> {
     return this.historicoChamadoRepository.find({
       where: { chamado: { id: chamadoId } },
-      relations: ['mensagem', 'usuario', 'chamado', 'usuario.departamento'],
+      relations: [
+        'mensagem',
+        'usuario',
+        'chamado',
+        'usuario.departamento',
+        'mensagem.usuario.departamento',
+      ],
       order: { createdAt: 'ASC' },
     });
   }
