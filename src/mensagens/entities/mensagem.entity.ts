@@ -1,8 +1,15 @@
 import { Usuario } from 'src/auth/entities/usuario.entity';
 import { Chamado } from 'src/chamados/entities/chamado.entity';
 import { ColumnDateTransformer } from 'src/generics/functions';
+import { HistoricoChamado } from 'src/historico-chamado/entities/historico-chamado.entity';
 import { DateTypeDB } from 'src/types/constants';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class Mensagem {
@@ -20,4 +27,10 @@ export class Mensagem {
 
   @ManyToOne(() => Chamado, (chamado) => chamado.mensagens)
   chamado: Chamado;
+
+  @OneToMany(
+    () => HistoricoChamado,
+    (historicoChamado) => historicoChamado.mensagem,
+  )
+  historicoChamados: HistoricoChamado[];
 }

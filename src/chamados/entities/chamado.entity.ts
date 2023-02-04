@@ -1,7 +1,16 @@
+import { Usuario } from 'src/auth/entities/usuario.entity';
+import { Departamento } from 'src/departamentos/entities/departamento.entity';
 import { ColumnDateTransformer } from 'src/generics/functions';
+import { HistoricoChamado } from 'src/historico-chamado/entities/historico-chamado.entity';
 import { Mensagem } from 'src/mensagens/entities/mensagem.entity';
 import { DateTypeDB } from 'src/types/constants';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class Chamado {
@@ -11,23 +20,20 @@ export class Chamado {
   @Column()
   titulo: string;
 
+  @Column()
+  ordem: number;
+
   @Column({
     type: 'timestamp',
     transformer: new ColumnDateTransformer(),
   })
   dtaInsercao: DateTypeDB;
 
-  @Column()
-  usuarioCriador: number;
-
   @Column({
     type: 'timestamp',
     transformer: new ColumnDateTransformer(),
   })
   dtaExpiracao: DateTypeDB;
-
-  @Column()
-  departamentoResponsavel: number;
 
   @Column()
   prioridade: number;
@@ -38,6 +44,18 @@ export class Chamado {
   @Column({ type: 'boolean' })
   ativo: boolean;
 
+  @ManyToOne(() => Usuario, (usuario) => usuario.chamados)
+  usuarioCriador: Usuario;
+
+  @ManyToOne(() => Departamento, (departamento) => departamento.chamados)
+  departamentoResponsavel: Departamento;
+
   @OneToMany(() => Mensagem, (mensagem) => mensagem.chamado)
   mensagens: Mensagem[];
+
+  @OneToMany(
+    () => HistoricoChamado,
+    (historicoChamado) => historicoChamado.chamado,
+  )
+  historicoChamados: HistoricoChamado[];
 }

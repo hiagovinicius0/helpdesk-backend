@@ -1,7 +1,9 @@
 import { Exclude } from 'class-transformer';
+import { Chamado } from 'src/chamados/entities/chamado.entity';
 import { Departamento } from 'src/departamentos/entities/departamento.entity';
 import { TipoUsuario } from 'src/enum/TipoUsuario';
 import { ColumnNumericTransformer } from 'src/generics/functions';
+import { HistoricoChamado } from 'src/historico-chamado/entities/historico-chamado.entity';
 import { Mensagem } from 'src/mensagens/entities/mensagem.entity';
 import {
   Entity,
@@ -43,4 +45,13 @@ export class Usuario {
 
   @ManyToOne(() => Departamento, (departamento) => departamento.usuarios)
   departamento: Departamento;
+
+  @OneToMany(
+    () => HistoricoChamado,
+    (historicoChamado) => historicoChamado.usuario,
+  )
+  historicoChamados?: HistoricoChamado[];
+
+  @OneToMany(() => Chamado, (chamado) => chamado.usuarioCriador)
+  chamados: Chamado[];
 }

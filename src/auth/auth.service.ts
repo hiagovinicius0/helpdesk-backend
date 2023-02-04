@@ -74,6 +74,7 @@ export class AuthService {
       email: criarUsuario.email,
       funcao: criarUsuario.funcao,
       ativo: true,
+      chamados: [],
     });
 
     return this.authRepository.obterUsuario(criarUsuario.email);

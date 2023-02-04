@@ -34,6 +34,7 @@ export class MensagensService {
       descricao: createMensagemDto.descricao,
       horario,
       usuario,
+      historicoChamados: [],
     });
 
     delete mensagem.usuario;

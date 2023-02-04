@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { MensagensService } from './mensagens.service';
 import { MensagensController } from './mensagens.controller';
 import { ConfigModule, ConfigService } from '@nestjs/config';
@@ -7,6 +7,9 @@ import { PostgresBDService } from 'src/postgres.bd';
 import { Mensagem } from './entities/mensagem.entity';
 import { ChamadosModule } from 'src/chamados/chamados.module';
 import { MensagensRepository } from './mensagens.repository';
+import { EventEmitterModule } from '@nestjs/event-emitter';
+import { MensagensEvents } from './events/mensagens.events';
+import { HistoricoChamadoModule } from 'src/historico-chamado/historico-chamado.module';
 
 @Module({
   imports: [
@@ -19,9 +22,12 @@ import { MensagensRepository } from './mensagens.repository';
       inject: [ConfigService],
     }),
     TypeOrmModule.forFeature([Mensagem]),
-    ChamadosModule,
+    forwardRef(() => ChamadosModule),
+    EventEmitterModule.forRoot(),
+    HistoricoChamadoModule,
   ],
   controllers: [MensagensController],
-  providers: [MensagensService, MensagensRepository],
+  providers: [MensagensService, MensagensRepository, MensagensEvents],
+  exports: [MensagensRepository],
 })
 export class MensagensModule {}

@@ -16,23 +16,51 @@ export class ChamadosRepository {
   }
 
   listar(chamadoId: string): Promise<Chamado | null> {
-    return this.chamadoRepo.findOne({ where: { id: chamadoId } });
+    return this.chamadoRepo.findOne({
+      where: { id: chamadoId },
+      relations: [
+        'departamentoResponsavel',
+        'usuarioCriador',
+        'mensagens',
+        'mensagens.usuario',
+        'mensagens.usuario.departamento',
+      ],
+    });
   }
 
   listarAberto(chamadoId: string): Promise<Chamado | null> {
     return this.chamadoRepo.findOne({
       where: { id: chamadoId, ultimoStatus: Not(StatusChamado.FINALIZADO) },
+      relations: [
+        'departamentoResponsavel',
+        'usuarioCriador',
+        'mensagens',
+        'mensagens.usuario',
+        'mensagens.usuario.departamento',
+      ],
     });
   }
 
   listarTodos(): Promise<Chamado[]> {
-    return this.chamadoRepo.find({ relations: ['mensagens'] });
+    return this.chamadoRepo.find({
+      relations: ['departamentoResponsavel', 'usuarioCriador'],
+    });
   }
 
-  listarApenasDepartamento(departamentoId: number): Promise<Chamado[]> {
+  listarNumeroAleatorio(ordem: number): Promise<Chamado> {
+    return this.chamadoRepo.findOne({ where: { ordem } });
+  }
+
+  listarApenasDepartamento(
+    departamentoId: number,
+    usuarioId: number,
+  ): Promise<Chamado[]> {
     return this.chamadoRepo.find({
-      where: { departamentoResponsavel: departamentoId },
-      relations: ['mensagens'],
+      where: [
+        { departamentoResponsavel: { id: departamentoId } },
+        { usuarioCriador: { id: usuarioId } },
+      ],
+      relations: ['departamentoResponsavel', 'usuarioCriador'],
     });
   }
 

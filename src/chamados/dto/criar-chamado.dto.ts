@@ -24,4 +24,9 @@ export class CriarChamadoDto {
   @IsNotEmpty()
   @IsEnum(PrioridadeChamado)
   prioridade: PrioridadeChamado;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  descricao: string;
 }
