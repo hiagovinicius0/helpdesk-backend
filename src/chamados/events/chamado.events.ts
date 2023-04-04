@@ -21,7 +21,7 @@ export class ChamadoEvents {
     await this.historicoChamadoRepository.salvar({
       chamado,
       createdAt: agora.format('YYYY-MM-DD HH:mm:ss'),
-      tipoHistorico: TipoHistorico.MENSAGEM_CHAMADO,
+      tipoHistorico: TipoHistorico.PRIORIDADE_CHAMADO,
       usuario: usuarioEditor,
       prioridade: chamado.prioridade,
     });
@@ -37,7 +37,7 @@ export class ChamadoEvents {
     await this.historicoChamadoRepository.salvar({
       chamado,
       createdAt: agora.format('YYYY-MM-DD HH:mm:ss'),
-      tipoHistorico: TipoHistorico.MENSAGEM_CHAMADO,
+      tipoHistorico: TipoHistorico.STATUS_CHAMADO,
       usuario: usuarioEditor,
       status: chamado.ultimoStatus,
     });

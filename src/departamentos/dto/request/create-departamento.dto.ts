@@ -6,4 +6,9 @@ export class CreateDepartamentoDto {
   @IsNotEmpty()
   @IsString()
   nome: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  icone: string;
 }

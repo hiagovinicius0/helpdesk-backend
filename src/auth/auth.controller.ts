@@ -2,6 +2,7 @@ import {
   Body,
   ClassSerializerInterceptor,
   Controller,
+  Get,
   Post,
   UseInterceptors,
 } from '@nestjs/common';
@@ -13,6 +14,7 @@ import { LoginDto } from './dto/request/login.dto';
 import { RegisterDto } from './dto/request/register.dto';
 import { LoginResponseDto } from './dto/response/login-response.dto';
 import { RegisterResponseDto } from './dto/response/register-response.dto';
+import { StatusResponseDto } from 'src/generics/dto/status-response.dto';
 
 @Controller('auth')
 @ApiTags('Auth')
@@ -37,5 +39,16 @@ export class AuthController {
   })
   register(@Body() register: RegisterDto): Promise<Usuario> {
     return this.authService.criarUsuario(register);
+  }
+
+  @Get('status')
+  @ApiResponse({
+    status: 201,
+    type: StatusResponseDto,
+  })
+  status(): StatusResponseDto {
+    return {
+      status: 'OK',
+    };
   }
 }

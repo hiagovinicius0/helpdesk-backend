@@ -10,6 +10,9 @@ export class Departamento {
   @Column()
   nome: string;
 
+  @Column({ default: null })
+  icone?: string;
+
   @Column()
   ativo: boolean;
 

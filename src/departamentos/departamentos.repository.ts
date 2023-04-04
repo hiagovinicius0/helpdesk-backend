@@ -15,15 +15,19 @@ export class DepartamentosRepository {
     return this.departamentoRepo.save({
       nome: createDepartamentoDto.nome,
       ativo: true,
+      icone: createDepartamentoDto.icone,
     });
   }
 
   listarTodos(): Promise<Departamento[]> {
-    return this.departamentoRepo.find();
+    return this.departamentoRepo.find({ order: { id: 'ASC' } });
   }
 
   listarAtivos(): Promise<Departamento[]> {
-    return this.departamentoRepo.find({ where: { ativo: true } });
+    return this.departamentoRepo.find({
+      where: { ativo: true },
+      order: { id: 'ASC' },
+    });
   }
 
   listarDepartamento(id: number): Promise<Departamento | null> {
