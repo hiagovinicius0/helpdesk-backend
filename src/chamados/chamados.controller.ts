@@ -12,10 +12,8 @@ import {
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Usuario } from 'src/auth/entities/usuario.entity';
 import { UsuarioDecorator } from 'src/decorator/usuario.decorator';
-import { TipoUsuario } from 'src/enum/TipoUsuario';
 import { StatusResponse } from 'src/generics/constants';
 import { StatusResponseDto } from 'src/generics/dto/status-response.dto';
-import { TiposDeUsuario } from 'src/guard/tipo-usuario.guard';
 import { HistoricoChamado } from 'src/historico-chamado/entities/historico-chamado.entity';
 import { ChamadosService } from './chamados.service';
 import { AtualizarChamadoDto } from './dto/request/atualizar-chamado.dto';
@@ -69,7 +67,6 @@ export class ChamadosController {
 
   @Patch(':id')
   @ApiResponse({ status: 200, type: CriarChamadoDto })
-  @TiposDeUsuario(TipoUsuario.ADMIN)
   atualizarChamado(
     @Param('id') id: string,
     @Body() atualizarChamadoDto: AtualizarChamadoDto,
@@ -84,7 +81,6 @@ export class ChamadosController {
 
   @Delete(':id')
   @ApiResponse({ status: 200, type: StatusResponseDto })
-  @TiposDeUsuario(TipoUsuario.ADMIN)
   remover(@Param('id') id: string): Promise<StatusResponse> {
     return this.chamadosService.remover(id);
   }
